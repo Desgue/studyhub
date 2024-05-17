@@ -26,12 +26,7 @@ export default function DWrapper({
         }}
         position={{ x: defaultX, y: defaultY }}
       >
-        <div
-          className="min-w-72 shadow-md rounded-md bg-[#121212] text-[#FFFFFF] bg-opacity-95     "
-          style={{ zIndex: z, position: "absolute" }}
-        >
-          {children}
-        </div>
+        <div style={{ zIndex: z, position: "absolute" }}>{children}</div>
       </Draggable>
     </>
   );

@@ -27,28 +27,30 @@ const Spotify = () => {
   };
 
   return (
-    <div className="flex flex-col justify-center items-center p-4">
-      <iframe
-        style={{ borderRadius: "12px" }}
-        src={`${playlistUrl}?utm_source=generator&theme=0`}
-        width="90%"
-        height="352"
-        allowFullScreen={false}
-        allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-        loading="lazy"
-      ></iframe>
+    <div className="min-w-72 shadow-md rounded-md bg-[#121212] text-[#FFFFFF] bg-opacity-95 ">
+      <div className="flex flex-col justify-center items-center p-4">
+        <iframe
+          style={{ borderRadius: "12px" }}
+          src={`${playlistUrl}?utm_source=generator&theme=0`}
+          width="90%"
+          height="352"
+          allowFullScreen={false}
+          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+          loading="lazy"
+        ></iframe>
 
-      <div className="w-full p-4 flex gap-2 items-center ">
-        <input
-          placeholder="Cole a URl do Spotify aqui"
-          type="url"
-          className="w-full rounded-lg bg-[#313131] text-[#FFFFFF] bg-opacity-95 p-1  "
-          value={inputVal}
-          onChange={(e) => setInputVal(e.target.value)}
-        />
-        <button className="hover:cursor-pointer" onClick={changePlaylist}>
-          <SlRefresh className="text-2xl" />
-        </button>
+        <div className="w-full p-4 flex gap-2 items-center ">
+          <input
+            placeholder="Cole a URl do Spotify aqui"
+            type="url"
+            className="w-full rounded-lg bg-[#313131] text-[#FFFFFF] bg-opacity-95 p-1  "
+            value={inputVal}
+            onChange={(e) => setInputVal(e.target.value)}
+          />
+          <button className="hover:cursor-pointer" onClick={changePlaylist}>
+            <SlRefresh className="text-2xl" />
+          </button>
+        </div>
       </div>
     </div>
   );
