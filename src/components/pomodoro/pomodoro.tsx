@@ -1,5 +1,6 @@
-import React, { Dispatch, SetStateAction } from "react";
+import React, { Dispatch, SetStateAction, useRef } from "react";
 import { Button } from "../ui/button";
+import alarm from "../../assets/alarm.wav";
 
 function formatDisplayTime(time: number) {
   if (time < 10) {
@@ -11,7 +12,7 @@ function formatDisplayTime(time: number) {
 function secondsToTime(seconds: number) {
   return [Math.floor(seconds / 60), seconds % 60];
 }
-const DEFAULT_POMODORO = 1500;
+const DEFAULT_POMODORO = 10;
 const DEFAULT_SHORT_BREAK = 300;
 const DEFAULT_LONG_BREAK = 900;
 type Session = ["Study" | "Break", Dispatch<SetStateAction<String>>];
@@ -23,10 +24,12 @@ function Pomodoro() {
   const [seconds, setSeconds] = React.useState(0); // Seconds value formated for diplay in the ui
   const [hasStarted, setHasStarted] = React.useState(false); // State responsible for indicating if clock is running or paused
   const [intervalId, setIntervalId] = React.useState(null) as any; // Id of the interval object used for clearing it when clock is paused
-  const [shortBreak, setShortBreak] = React.useState(DEFAULT_SHORT_BREAK);
-  const [longBreak, setLongBreak] = React.useState(DEFAULT_LONG_BREAK);
-  const [breakTime, setBreakTime] = React.useState(shortBreak);
+  const [shortBreak, setShortBreak] = React.useState(DEFAULT_SHORT_BREAK); // short break interval time configurable through settings
+  const [longBreak, setLongBreak] = React.useState(DEFAULT_LONG_BREAK); // long break interval time configurable through settings
+  const [breakTime, setBreakTime] = React.useState(shortBreak); // break time state
   const [sessionType, setSessionType] = React.useState("Study") as Session;
+  const [alarmSound, setAlarmSound] = React.useState(alarm);
+  const [audio, setAudio] = React.useState(new Audio(alarmSound));
 
   React.useEffect(() => {
     let time = secondsToTime(timer);
@@ -44,13 +47,19 @@ function Pomodoro() {
         // If clock run down at a study session, then start the break session
         setSessionType("Break");
         setTimer(breakTime);
+        audio.play();
       } else {
         // If clock run down at break session, then start the study session
         setSessionType("Study");
         setTimer(pomodoroTimer);
+        audio.play();
       }
     }
   }, [timer]);
+
+  React.useEffect(() => {
+    setAudio(new Audio(alarmSound));
+  }, [alarmSound]);
 
   const handleCountdownStart = () => {
     // Click on button when timer is running should pause it
@@ -68,7 +77,7 @@ function Pomodoro() {
           }
           return 0;
         });
-      }, 10);
+      }, 1000);
 
       setIntervalId(newIntervalId);
     }
