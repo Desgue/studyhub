@@ -8,7 +8,7 @@ export default function DWrapper({ children }: { children: any }) {
   return (
     <Draggable bounds="body" onMouseDown={() => setZIndex(++GLOBAL_Z)}>
       <div
-        className="w-72 shadow-md rounded-md bg-[#121212] text-[#FFFFFF] bg-opacity-95     "
+        className="min-w-72 shadow-md rounded-md bg-[#121212] text-[#FFFFFF] bg-opacity-95     "
         style={{ zIndex: z, position: "absolute" }}
       >
         {children}
