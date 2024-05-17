@@ -1,6 +1,5 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { Button } from "../ui/button";
-import useCountDown from "@/hooks/userCountdown";
 
 function formatDisplayTime(time: number) {
   if (time < 10) {
@@ -15,6 +14,7 @@ function secondsToTime(seconds: number) {
 const DEFAULT_POMODORO = 1500;
 const DEFAULT_SHORT_BREAK = 300;
 const DEFAULT_LONG_BREAK = 900;
+type Session = ["Study" | "Break", Dispatch<SetStateAction<String>>];
 
 function Pomodoro() {
   const [pomodoroTimer, setPomodoroTimer] = React.useState(DEFAULT_POMODORO); // Pomodoro countdown timer in seconds
@@ -23,6 +23,10 @@ function Pomodoro() {
   const [seconds, setSeconds] = React.useState(0); // Seconds value formated for diplay in the ui
   const [hasStarted, setHasStarted] = React.useState(false); // State responsible for indicating if clock is running or paused
   const [intervalId, setIntervalId] = React.useState(null) as any; // Id of the interval object used for clearing it when clock is paused
+  const [shortBreak, setShortBreak] = React.useState(DEFAULT_SHORT_BREAK);
+  const [longBreak, setLongBreak] = React.useState(DEFAULT_LONG_BREAK);
+  const [breakTime, setBreakTime] = React.useState(shortBreak);
+  const [sessionType, setSessionType] = React.useState("Study") as Session;
 
   React.useEffect(() => {
     let time = secondsToTime(timer);
@@ -34,6 +38,20 @@ function Pomodoro() {
     setHasStarted(intervalId !== null);
   }, [intervalId]);
 
+  React.useEffect(() => {
+    if (timer === 0) {
+      if (sessionType === "Study") {
+        // If clock run down at a study session, then start the break session
+        setSessionType("Break");
+        setTimer(breakTime);
+      } else {
+        // If clock run down at break session, then start the study session
+        setSessionType("Study");
+        setTimer(pomodoroTimer);
+      }
+    }
+  }, [timer]);
+
   const handleCountdownStart = () => {
     // Click on button when timer is running should pause it
     if (hasStarted) {
@@ -44,25 +62,43 @@ function Pomodoro() {
     } else {
       // Click on button when timer is paused should initiate it
       const newIntervalId = setInterval(() => {
-        setTimer((prev) => prev - 1);
-      }, 1000);
+        setTimer((prev) => {
+          if (prev > 0) {
+            return prev - 1;
+          }
+          return 0;
+        });
+      }, 10);
 
       setIntervalId(newIntervalId);
     }
   };
-  const handleCountdownReset = () => {};
+  const handleCountdownReset = () => {
+    if (intervalId) clearInterval(intervalId);
+    setTimer(pomodoroTimer);
+    setIntervalId(null);
+    setBreakTime(shortBreak);
+  };
 
   return (
     <div className="text-center">
       <div className="text-right px-1"> x</div>
       <div className="flex">
         <div className="flex flex-1 flex-col items-center justify-center">
-          <Button variant="ghost" disabled={hasStarted}>
+          <Button
+            variant="ghost"
+            disabled={hasStarted}
+            onClick={() => setBreakTime(shortBreak)}
+          >
             Pausa Curta
           </Button>
         </div>
         <div className="flex flex-1 flex-col items-center justify-center">
-          <Button variant="ghost" disabled={hasStarted}>
+          <Button
+            variant="ghost"
+            disabled={hasStarted}
+            onClick={() => setBreakTime(longBreak)}
+          >
             Pausa Longa
           </Button>
         </div>
