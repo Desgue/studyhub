@@ -12,7 +12,7 @@ function formatDisplayTime(time: number) {
 function secondsToTime(seconds: number) {
   return [Math.floor(seconds / 60), seconds % 60];
 }
-const DEFAULT_POMODORO = 10;
+const DEFAULT_POMODORO = 1500;
 const DEFAULT_SHORT_BREAK = 300;
 const DEFAULT_LONG_BREAK = 900;
 type Session = ["Study" | "Break", Dispatch<SetStateAction<String>>];
