@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useRef } from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { Button } from "../ui/button";
 import alarm from "../../assets/alarm.wav";
 
@@ -18,16 +18,20 @@ const DEFAULT_LONG_BREAK = 900;
 type Session = ["Study" | "Break", Dispatch<SetStateAction<String>>];
 
 function Pomodoro() {
+  // @ts-ignore
   const [pomodoroTimer, setPomodoroTimer] = React.useState(DEFAULT_POMODORO); // Pomodoro countdown timer in seconds
   const [timer, setTimer] = React.useState(pomodoroTimer); // Timer state in seconds that will be manipulated
   const [minutes, setMinutes] = React.useState(0); // Minutes value formated for diplay in the ui
   const [seconds, setSeconds] = React.useState(0); // Seconds value formated for diplay in the ui
   const [hasStarted, setHasStarted] = React.useState(false); // State responsible for indicating if clock is running or paused
   const [intervalId, setIntervalId] = React.useState(null) as any; // Id of the interval object used for clearing it when clock is paused
+  // @ts-ignore
   const [shortBreak, setShortBreak] = React.useState(DEFAULT_SHORT_BREAK); // short break interval time configurable through settings
+  // @ts-ignore
   const [longBreak, setLongBreak] = React.useState(DEFAULT_LONG_BREAK); // long break interval time configurable through settings
   const [breakTime, setBreakTime] = React.useState(shortBreak); // break time state
   const [sessionType, setSessionType] = React.useState("Study") as Session;
+  // @ts-ignore
   const [alarmSound, setAlarmSound] = React.useState(alarm);
   const [audio, setAudio] = React.useState(new Audio(alarmSound));
 
