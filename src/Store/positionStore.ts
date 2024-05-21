@@ -1,4 +1,3 @@
-import Spotify from "@/components/spotify/spotify";
 import { create } from "zustand";
 
 
