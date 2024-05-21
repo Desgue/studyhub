@@ -1,12 +1,18 @@
 import DWrapper from "./components/DraggableWrapper/dwrapper";
 import Pomodoro from "./components/pomodoro/pomodoro";
 import Spotify from "./components/spotify/spotify";
+import Youtube from "./components/youtube/Youtube";
 import bg from "./assets/forestBG.jpg";
-import { usePomodoroPos, useSpotifyPos } from "./Store/positionStore";
+import {
+  usePomodoroPos,
+  useSpotifyPos,
+  useYoutubePos,
+} from "./Store/positionStore";
 import useMediaQuery from "./Hooks/useMediaQuery";
 function App() {
   const { pomodoroPos, setPomodoroPos } = usePomodoroPos();
   const { spotifyPos, setSpotifyPos } = useSpotifyPos();
+  const { youtubePos, setYoutubePos } = useYoutubePos();
   const isDesktop = useMediaQuery("(min-width: 768px)");
   return (
     <>
@@ -18,6 +24,7 @@ function App() {
           <div className="flex flex-col items-center gap-4">
             <Pomodoro />
             <Spotify />
+            <Youtube />
           </div>
         ) : (
           <>
@@ -34,6 +41,13 @@ function App() {
               setPosition={setSpotifyPos}
             >
               <Spotify />
+            </DWrapper>
+            <DWrapper
+              defaultX={youtubePos.x}
+              defaultY={youtubePos.y}
+              setPosition={setYoutubePos}
+            >
+              <Youtube />
             </DWrapper>
           </>
         )}

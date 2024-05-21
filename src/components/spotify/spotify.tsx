@@ -9,7 +9,7 @@ const Spotify = () => {
   const [inputVal, setInputVal] = React.useState("");
 
   const changePlaylist = () => {
-    if (!playlistUrl.startsWith("https://open.spotify.com/playlist")) {
+    if (!inputVal.startsWith("https://open.spotify.com/playlist")) {
       alert("playlist invalid");
       setInputVal("");
       return;

@@ -1,3 +1,4 @@
+import Spotify from "@/components/spotify/spotify";
 import { create } from "zustand";
 
 
@@ -9,6 +10,11 @@ type PomodoroPosStore = {
 type SpotifyPosStore = {
   spotifyPos: {x:number, y:number},
   setSpotifyPos: (x:number, y:number) => void
+}
+
+type YoutbePosStore = {
+  youtubePos: {x:number, y:number},
+  setYoutubePos: (x:number, y:number) => void
 }
 export const usePomodoroPos  = create<PomodoroPosStore>((set) => {
   return {
@@ -30,3 +36,13 @@ export const useSpotifyPos = create<SpotifyPosStore>((set) => {
     })),
   };
 });
+
+export const useYoutubePos = create<YoutbePosStore>((set) => {
+  return {
+    youtubePos : {x: 280, y: -169},
+    setYoutubePos: (newX: number, newY: number) =>
+    set(() => ({
+      youtubePos: {x: newX, y: newY}
+    }))
+  }
+})
