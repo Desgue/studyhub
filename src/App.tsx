@@ -16,12 +16,18 @@ function App() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   return (
     <>
-      <div
-        className="h-screen flex items-center justify-center bg-center "
-        style={{ backgroundImage: `url(${bg})` }}
-      >
+      <div className="fixed inset-0">
+        <div className="inset-0 bg-cover block  absolute z-0">
+          <img
+            src={bg}
+            alt="background image"
+            className="object-cover h-full w-full "
+          />
+        </div>
+      </div>
+      <div className="md:h-screen flex items-center justify-center py-12">
         {!isDesktop ? (
-          <div className="flex flex-col items-center gap-4">
+          <div className="flex flex-col items-center gap-8 z-50">
             <Pomodoro />
             <Spotify />
             <Youtube />
