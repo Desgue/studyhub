@@ -25,9 +25,9 @@ function App() {
           />
         </div>
       </div>
-      <div className="md:h-screen flex items-center justify-center py-12">
+      <div className="md:h-screen flex py-12 md:p-0">
         {!isDesktop ? (
-          <div className="flex flex-col items-center gap-8 z-50">
+          <div className="w-full justify-center items-center flex flex-col gap-8 z-50">
             <Pomodoro />
             <Spotify />
             <Youtube />
