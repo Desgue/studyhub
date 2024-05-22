@@ -8,6 +8,6 @@
 
     .sidebar-tooltips{
       @apply absolute min-w-max w-auto left-28 text-xs font-bold bg-gray-900 shadow-md rounded-md p-2 m-2 scale-0 
-      transition duration-100;
+      transition duration-100 z-[999];
     }
   }
