@@ -102,7 +102,7 @@ function IconContainer({
   return (
     <div
       className={`sidebar-icons group rounded-sm ${className} ${
-        isVisible ? "bg-gray-500" : ""
+        isVisible ? "bg-blue-600" : ""
       }`}
       onClick={onClick}
     >
