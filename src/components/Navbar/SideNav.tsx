@@ -13,10 +13,18 @@ import {
 } from "@/components/ui/dialog";
 import useMediaQuery from "@/Hooks/useMediaQuery";
 import { MouseEventHandler, useState } from "react";
+import {
+  usePomodoroVisibility,
+  useSpotifyVisibility,
+  useYoutubeVisibility,
+} from "@/Store/visibilityStore";
 
 export default function SideNav() {
   let isDesktop = useMediaQuery("(min-width: 768px)");
   const [isOpen, setIsOpen] = useState(false);
+  const { isPomodoroVisible, setPomodoroVisibility } = usePomodoroVisibility();
+  const { isSpotifyVisible, setSpotifyVisibility } = useSpotifyVisibility();
+  const { isYoutubeVisible, setYoutubeVisibility } = useYoutubeVisibility();
 
   const handleOpenMenu = () => {
     setIsOpen((prev) => !prev);
@@ -24,12 +32,24 @@ export default function SideNav() {
   return (
     <>
       {isDesktop ? (
-        <div className="fixed top-0 left-0 h-fit w-24 mt-6 ml-4 rounded-md flex flex-col bg-gray-900 text-white ">
-          <IconContainer icon={<FaSpotify size={28} />} tooltip="Spotify" />
-          <IconContainer icon={<FaYoutube size={32} />} tooltip="Youtube" />
+        <div className="fixed top-0 left-0 h-fit w-24 mt-6 ml-4 rounded-lg flex flex-col gap-1 bg-gray-900 text-white ">
+          <IconContainer
+            icon={<FaSpotify size={28} />}
+            tooltip="Spotify"
+            isVisible={isSpotifyVisible}
+            onClick={() => setSpotifyVisibility(!isSpotifyVisible)}
+          />
+          <IconContainer
+            icon={<FaYoutube size={32} />}
+            tooltip="Youtube"
+            isVisible={isYoutubeVisible}
+            onClick={() => setYoutubeVisibility(!isYoutubeVisible)}
+          />
           <IconContainer
             icon={<MdOutlineTimer size={30} />}
             tooltip="Pomodoro"
+            isVisible={isPomodoroVisible}
+            onClick={() => setPomodoroVisibility(!isPomodoroVisible)}
           />
           <SettingsDialog />
         </div>
@@ -43,10 +63,20 @@ export default function SideNav() {
           <IconContainer
             icon={<FaSpotify size={28} />}
             className={isOpen ? "" : "hidden"}
+            isVisible={isSpotifyVisible}
+            onClick={() => setSpotifyVisibility(!isSpotifyVisible)}
           />
           <IconContainer
             icon={<FaYoutube size={32} />}
             className={isOpen ? "" : "hidden"}
+            isVisible={isYoutubeVisible}
+            onClick={() => setYoutubeVisibility(!isYoutubeVisible)}
+          />
+          <IconContainer
+            icon={<MdOutlineTimer size={32} />}
+            className={isOpen ? "" : "hidden"}
+            isVisible={isYoutubeVisible}
+            onClick={() => setYoutubeVisibility(!isYoutubeVisible)}
           />
 
           <MdOutlineTimer size={30} className={isOpen ? "" : "hidden"} />
@@ -61,14 +91,21 @@ function IconContainer({
   tooltip = "Tooltip",
   className,
   onClick,
+  isVisible,
 }: {
   icon: React.ReactNode;
   tooltip?: string;
   className?: string;
   onClick?: MouseEventHandler<HTMLDivElement>;
+  isVisible?: boolean;
 }) {
   return (
-    <div className={`sidebar-icons group ${className}`} onClick={onClick}>
+    <div
+      className={`sidebar-icons group rounded-sm ${className} ${
+        isVisible ? "bg-blue-500" : ""
+      }`}
+      onClick={onClick}
+    >
       {icon}
       {tooltip ? (
         <span className="sidebar-tooltips group-hover:scale-100">
