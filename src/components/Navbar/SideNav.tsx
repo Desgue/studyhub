@@ -75,7 +75,7 @@ export default function SideNav() {
           <IconContainer
             icon={<MdOutlineTimer size={32} />}
             className={isOpen ? "w-full" : "hidden"}
-            isVisible={isYoutubeVisible}
+            isVisible={isPomodoroVisible}
             onClick={() => setPomodoroVisibility(!isPomodoroVisible)}
           />
 

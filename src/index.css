@@ -3,7 +3,7 @@
   @tailwind utilities;
   @layer components {
     .sidebar-icons{
-      @apply p-2 md:w-24 md:h-24 flex items-center justify-center bg-gray-800  hover:bg-gray-700 hover:cursor-pointer;  
+      @apply p-2 md:w-24 md:h-24 flex items-center justify-center bg-gray-800  md:hover:bg-gray-700 hover:cursor-pointer;  
     }
 
     .sidebar-tooltips{
