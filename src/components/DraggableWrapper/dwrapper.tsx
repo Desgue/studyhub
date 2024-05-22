@@ -20,7 +20,7 @@ export default function DWrapper({
   return (
     <>
       <Draggable
-        bounds="body"
+        bounds="parent"
         onMouseDown={() => setZIndex(++GLOBAL_Z)}
         onStop={(_, data) => {
           setPosition(data.x, data.y);

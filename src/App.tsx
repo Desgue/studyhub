@@ -29,7 +29,7 @@ function App() {
       <div className="fixed inset-0">
         <CozyShop />
       </div>
-      <div className="overflow-auto md:overflow-hidden  fixed inset-0 h-full">
+      <div className="overflow-auto md:overflow-hidden  fixed inset-0 h-screen">
         <SideNav />
         <div className="md:h-screen py-4 flex md:p-0">
           {!isDesktop ? (
