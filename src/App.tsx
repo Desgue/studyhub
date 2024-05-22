@@ -10,8 +10,17 @@ import {
 } from "./Store/positionStore";
 import useMediaQuery from "./Hooks/useMediaQuery";
 import SideNav from "./components/Navbar/SideNav";
+import {
+  usePomodoroVisibility,
+  useSpotifyVisibility,
+  useYoutubeVisibility,
+} from "./Store/visibilityStore";
+
 function App() {
   const { pomodoroPos, setPomodoroPos } = usePomodoroPos();
+  const { isPomodoroVisible } = usePomodoroVisibility();
+  const { isSpotifyVisible } = useSpotifyVisibility();
+  const { isYoutubeVisible } = useYoutubeVisibility();
   const { spotifyPos, setSpotifyPos } = useSpotifyPos();
   const { youtubePos, setYoutubePos } = useYoutubePos();
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -40,6 +49,7 @@ function App() {
               defaultX={pomodoroPos.x}
               defaultY={pomodoroPos.y}
               setPosition={setPomodoroPos}
+              visible={isPomodoroVisible}
             >
               <Pomodoro />
             </DWrapper>
@@ -47,6 +57,7 @@ function App() {
               defaultX={spotifyPos.x}
               defaultY={spotifyPos.y}
               setPosition={setSpotifyPos}
+              visible={isSpotifyVisible}
             >
               <Spotify />
             </DWrapper>
@@ -54,6 +65,7 @@ function App() {
               defaultX={youtubePos.x}
               defaultY={youtubePos.y}
               setPosition={setYoutubePos}
+              visible={isYoutubeVisible}
             >
               <Youtube />
             </DWrapper>

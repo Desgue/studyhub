@@ -8,11 +8,13 @@ export default function DWrapper({
   defaultX,
   defaultY,
   setPosition,
+  visible,
 }: {
   children: any;
   defaultX: number;
   defaultY: number;
   setPosition: any;
+  visible: boolean;
 }) {
   const [z, setZIndex] = React.useState(0);
   return (
@@ -26,7 +28,12 @@ export default function DWrapper({
         }}
         position={{ x: defaultX, y: defaultY }}
       >
-        <div style={{ zIndex: z, position: "absolute" }}>{children}</div>
+        <div
+          className={`absolute ${visible ? "" : "hidden"}`}
+          style={{ zIndex: z }}
+        >
+          {children}
+        </div>
       </Draggable>
     </>
   );

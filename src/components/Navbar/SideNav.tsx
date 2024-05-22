@@ -12,7 +12,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import useMediaQuery from "@/Hooks/useMediaQuery";
-import { useState } from "react";
+import { MouseEventHandler, useState } from "react";
 
 export default function SideNav() {
   let isDesktop = useMediaQuery("(min-width: 768px)");
@@ -60,13 +60,15 @@ function IconContainer({
   icon,
   tooltip = "Tooltip",
   className,
+  onClick,
 }: {
   icon: React.ReactNode;
   tooltip?: string;
   className?: string;
+  onClick?: MouseEventHandler<HTMLDivElement>;
 }) {
   return (
-    <div className={`sidebar-icons group ${className}`}>
+    <div className={`sidebar-icons group ${className}`} onClick={onClick}>
       {icon}
       {tooltip ? (
         <span className="sidebar-tooltips group-hover:scale-100">
