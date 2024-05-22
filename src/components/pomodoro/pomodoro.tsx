@@ -94,7 +94,7 @@ function Pomodoro() {
   };
 
   return (
-    <div className="min-w-72 shadow-md rounded-md bg-[#121212] text-[#FFFFFF] bg-opacity-95     ">
+    <div className="widget-container">
       <div className="text-right px-1"> x</div>
       <div className="flex">
         <div className="flex flex-1 flex-col items-center justify-center">

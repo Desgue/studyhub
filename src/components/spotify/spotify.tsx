@@ -27,7 +27,7 @@ const Spotify = () => {
   };
 
   return (
-    <div className="min-w-72 shadow-md rounded-md bg-[#121212] text-[#FFFFFF] bg-opacity-95 ">
+    <div className="widget-container">
       <div className="flex flex-col justify-center items-center p-4">
         <iframe
           style={{ borderRadius: "12px" }}

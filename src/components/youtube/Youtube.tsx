@@ -16,7 +16,7 @@ function Youtube() {
     setInputVal("");
   };
   return (
-    <div className="min-w-80 shadow-md rounded-md bg-[#121212] text-[#FFFFFF] bg-opacity-95 ">
+    <div className="widget-container ">
       <div className="flex flex-col justify-center items-center pt-6">
         <iframe
           width={isDesktop ? "460" : "100%"}
