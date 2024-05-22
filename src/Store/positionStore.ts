@@ -17,7 +17,7 @@ type YoutbePosStore = {
 }
 export const usePomodoroPos  = create<PomodoroPosStore>((set) => {
   return {
-    pomodoroPos: { x: 200, y: 100 },
+    pomodoroPos: { x: 727 , y: 22 },
     setPomodoroPos: (newX: number, newY: number) =>
       set(() => ({
         pomodoroPos: {x: newX, y: newY}
@@ -28,7 +28,7 @@ export const usePomodoroPos  = create<PomodoroPosStore>((set) => {
 
 export const useSpotifyPos = create<SpotifyPosStore>((set) => {
   return {
-    spotifyPos: { x: 700, y: 100 },
+    spotifyPos: { x: 309 , y: 21 },
     setSpotifyPos: (newX: number, newY: number) =>
     set(() => ({
       spotifyPos: {x: newX, y: newY}
@@ -38,7 +38,7 @@ export const useSpotifyPos = create<SpotifyPosStore>((set) => {
 
 export const useYoutubePos = create<YoutbePosStore>((set) => {
   return {
-    youtubePos : {x: 1200, y: 100},
+    youtubePos : {x: 726  , y: 287},
     setYoutubePos: (newX: number, newY: number) =>
     set(() => ({
       youtubePos: {x: newX, y: newY}
