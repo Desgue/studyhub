@@ -1,6 +1,7 @@
 import { FaSpotify } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { MdOutlineTimer } from "react-icons/md";
+import { IoSettingsOutline } from "react-icons/io5";
 
 function SideNav() {
   return (
@@ -9,6 +10,7 @@ function SideNav() {
         <IconContainer icon={<FaSpotify size={28} />} />
         <IconContainer icon={<FaYoutube size={32} />} />
         <IconContainer icon={<MdOutlineTimer size={30} />} />
+        <IconContainer icon={<IoSettingsOutline size={30} />} />
       </div>
     </>
   );

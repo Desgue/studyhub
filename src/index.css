@@ -1,8 +1,4 @@
 @tailwind base;
   @tailwind components;
   @tailwind utilities;
-  @layer components {
-    .sidebar-icons{
-      @apply w-24 h-24 flex items-center justify-center bg-gray-800  hover:bg-gray-700 hover:cursor-pointer;  
-    }
-  }
+  
