@@ -51,10 +51,10 @@ export default function SideNav() {
             isVisible={isPomodoroVisible}
             onClick={() => setPomodoroVisibility(!isPomodoroVisible)}
           />
-          <SettingsDialog />
+          <SettingsDialog isOpen={true} />
         </div>
       ) : (
-        <div className="fixed items-center justify-center top-0 left-0 h-fit w-12 mt-4 ml-2 py-3 rounded-md flex flex-col gap-8 bg-gray-800  text-white ">
+        <div className="fixed items-center justify-center top-0 left-0 h-auto w-12 mt-4 ml-2 py-3 rounded-md flex flex-col gap-2 bg-gray-800  text-white z-[999] ">
           <GiHamburgerMenu
             size={24}
             className="text-white"
@@ -62,24 +62,24 @@ export default function SideNav() {
           />
           <IconContainer
             icon={<FaSpotify size={28} />}
-            className={isOpen ? "" : "hidden"}
+            className={isOpen ? "w-full" : "hidden"}
             isVisible={isSpotifyVisible}
             onClick={() => setSpotifyVisibility(!isSpotifyVisible)}
           />
           <IconContainer
             icon={<FaYoutube size={32} />}
-            className={isOpen ? "" : "hidden"}
+            className={isOpen ? "w-full" : "hidden"}
             isVisible={isYoutubeVisible}
             onClick={() => setYoutubeVisibility(!isYoutubeVisible)}
           />
           <IconContainer
             icon={<MdOutlineTimer size={32} />}
-            className={isOpen ? "" : "hidden"}
+            className={isOpen ? "w-full" : "hidden"}
             isVisible={isYoutubeVisible}
-            onClick={() => setYoutubeVisibility(!isYoutubeVisible)}
+            onClick={() => setPomodoroVisibility(!isPomodoroVisible)}
           />
 
-          <MdOutlineTimer size={30} className={isOpen ? "" : "hidden"} />
+          <SettingsDialog isOpen={isOpen} />
         </div>
       )}
     </>
@@ -88,7 +88,7 @@ export default function SideNav() {
 
 function IconContainer({
   icon,
-  tooltip = "Tooltip",
+  tooltip,
   className,
   onClick,
   isVisible,
@@ -102,7 +102,7 @@ function IconContainer({
   return (
     <div
       className={`sidebar-icons group rounded-sm ${className} ${
-        isVisible ? "bg-blue-500" : ""
+        isVisible ? "bg-gray-500" : ""
       }`}
       onClick={onClick}
     >
@@ -116,11 +116,11 @@ function IconContainer({
   );
 }
 
-function SettingsDialog() {
+function SettingsDialog({ isOpen }: { isOpen?: boolean }) {
   return (
     <>
       <Dialog>
-        <DialogTrigger>
+        <DialogTrigger className={isOpen ? "" : "hidden"}>
           <IconContainer
             icon={<IoSettingsOutline size={30} />}
             tooltip="Configurações"
@@ -130,8 +130,7 @@ function SettingsDialog() {
           <DialogHeader>
             <DialogTitle className="text-center "> Settings </DialogTitle>
             <DialogDescription className="text-white">
-              This action cannot be undone. This will permanently delete your
-              account and remove your data from our servers.
+              Settings Page Under Construction
             </DialogDescription>
           </DialogHeader>
         </DialogContent>

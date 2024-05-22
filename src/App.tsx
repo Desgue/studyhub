@@ -39,9 +39,15 @@ function App() {
         <SideNav />
         {!isDesktop ? (
           <div className="w-full justify-center items-center flex flex-col gap-8 z-50">
-            <Pomodoro />
-            <Spotify />
-            <Youtube />
+            <div className={isPomodoroVisible ? "" : "absolute hidden"}>
+              <Pomodoro />
+            </div>
+            <div className={isSpotifyVisible ? "" : "absolute hidden"}>
+              <Spotify />
+            </div>
+            <div className={isYoutubeVisible ? "" : "absolute hidden"}>
+              <Youtube />
+            </div>
           </div>
         ) : (
           <>
