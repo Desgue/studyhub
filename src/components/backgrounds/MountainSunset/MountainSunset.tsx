@@ -2,7 +2,7 @@ import bg from "../../../assets/background/mountain-sunset.jpg";
 
 function MountainSunset() {
   return (
-    <div className="fixed inset-0">
+    <div className="fixed inset-0 h-full">
       <div className="inset-0 bg-cover block  absolute z-0">
         <img
           src={bg}

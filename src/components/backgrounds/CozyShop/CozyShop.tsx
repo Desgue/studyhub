@@ -2,7 +2,7 @@ import cozyShop from "../../../assets/background/lofi-rainy-cozy-shop.mp4";
 
 const CozyShop = () => {
   return (
-    <div className="fixed z-0 inset-0 ">
+    <div className="absolute block bg-cover z-0 inset-0 ">
       <video
         autoPlay
         muted
