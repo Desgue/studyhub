@@ -2,7 +2,6 @@ import DWrapper from "./components/DraggableWrapper/dwrapper";
 import Pomodoro from "./components/pomodoro/pomodoro";
 import Spotify from "./components/spotify/spotify";
 import Youtube from "./components/youtube/Youtube";
-import bg from "./assets/forestBG.jpg";
 import {
   usePomodoroPos,
   useSpotifyPos,
@@ -15,6 +14,7 @@ import {
   useSpotifyVisibility,
   useYoutubeVisibility,
 } from "./Store/visibilityStore";
+import CozyShop from "./components/backgrounds/CozyShop/CozyShop";
 
 function App() {
   const { pomodoroPos, setPomodoroPos } = usePomodoroPos();
@@ -26,15 +26,7 @@ function App() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   return (
     <>
-      <div className="fixed inset-0">
-        <div className="inset-0 bg-cover block  absolute z-0">
-          <img
-            src={bg}
-            alt="background image"
-            className="object-cover h-full w-full "
-          />
-        </div>
-      </div>
+      <CozyShop />
       <div className="md:h-screen flex py-12 md:p-0">
         <SideNav />
         {!isDesktop ? (
