@@ -9,6 +9,7 @@ import {
   useYoutubePos,
 } from "./Store/positionStore";
 import useMediaQuery from "./Hooks/useMediaQuery";
+import SideNav from "./components/Navbar/SideNav";
 function App() {
   const { pomodoroPos, setPomodoroPos } = usePomodoroPos();
   const { spotifyPos, setSpotifyPos } = useSpotifyPos();
@@ -26,6 +27,7 @@ function App() {
         </div>
       </div>
       <div className="md:h-screen flex py-12 md:p-0">
+        <SideNav />
         {!isDesktop ? (
           <div className="w-full justify-center items-center flex flex-col gap-8 z-50">
             <Pomodoro />
