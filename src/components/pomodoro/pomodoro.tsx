@@ -95,7 +95,6 @@ function Pomodoro() {
 
   return (
     <div className="widget-container">
-      <div className="text-right px-1"> x</div>
       <div className="flex">
         <div className="flex flex-1 flex-col items-center justify-center">
           <Button
@@ -116,7 +115,7 @@ function Pomodoro() {
           </Button>
         </div>
       </div>
-      <div className="text-9xl p-4">
+      <div className="text-7xl md:text-9xl text-center p-4 ">
         {formatDisplayTime(minutes)}:{formatDisplayTime(seconds)}
       </div>
       <div className="flex items-center justify-center gap-1">

@@ -8,7 +8,6 @@ const URL_PREFIX = "https://www.youtube-nocookie.com/embed";
 function Youtube() {
   const [inputVal, setInputVal] = React.useState("");
   const [playlistUrl, setPlaylistUrl] = React.useState(DEFAULT_PLAYLIST);
-  const isDesktop = useMediaQuery("(min-width: 768px)");
   const changePlaylist = () => {
     const cutoff = inputVal.lastIndexOf("/");
     const playListId = inputVal.slice(cutoff);
@@ -19,7 +18,7 @@ function Youtube() {
     <div className="widget-container ">
       <div className="flex flex-col justify-center items-center pt-6">
         <iframe
-          width={isDesktop ? "460" : "100%"}
+          width="100%"
           height="315"
           src={playlistUrl}
           title="YouTube video player"

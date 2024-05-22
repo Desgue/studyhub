@@ -12,6 +12,6 @@
     }
 
     .widget-container {
-      @apply min-w-72 shadow-md rounded-md bg-[#121212] text-[#FFFFFF] bg-opacity-95    ;
+      @apply  md:min-w-72 w-72 md:w-96 ml-8 md:ml-0  shadow-md rounded-md bg-[#121212] text-[#FFFFFF] bg-opacity-95    ;
     }
   }
