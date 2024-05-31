@@ -3,6 +3,7 @@ import { FaYoutube } from "react-icons/fa";
 import { MdOutlineTimer } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
+import { TbPhoto } from "react-icons/tb";
 import {
   Dialog,
   DialogContent,
@@ -18,6 +19,9 @@ import {
   useSpotifyVisibility,
   useYoutubeVisibility,
 } from "@/Store/visibilityStore";
+import aurora from "../../assets/background/aurora-boreal.jpg";
+import lofi from "../../assets/background/lofi-rainy-cozy-shop.mp4";
+import forest from "../../assets/background/forestBG.jpg";
 
 export default function SideNav() {
   let isDesktop = useMediaQuery("(min-width: 768px)");
@@ -52,6 +56,7 @@ export default function SideNav() {
             onClick={() => setPomodoroVisibility(!isPomodoroVisible)}
           />
           <SettingsDialog isOpen={true} />
+          <BackgroundDialog isOpen={true} />
         </div>
       ) : (
         <div className="fixed items-center justify-center top-0 left-0 h-auto w-12 mt-4 ml-2 py-3 rounded-md flex flex-col gap-2 bg-gray-800  text-white z-[999] ">
@@ -78,8 +83,12 @@ export default function SideNav() {
             isVisible={isPomodoroVisible}
             onClick={() => setPomodoroVisibility(!isPomodoroVisible)}
           />
-
           <SettingsDialog isOpen={isOpen} />
+          <IconContainer
+            icon={<TbPhoto size={32} />}
+            className={isOpen ? "w-full" : "hidden"}
+            isVisible={false}
+          />
         </div>
       )}
     </>
@@ -135,6 +144,47 @@ function SettingsDialog({ isOpen }: { isOpen?: boolean }) {
           </DialogHeader>
         </DialogContent>
       </Dialog>
+    </>
+  );
+}
+
+function BackgroundDialog({ isOpen }: { isOpen?: boolean }) {
+  return (
+    <>
+      <Dialog>
+        <DialogTrigger className={isOpen ? "" : "hidden"}>
+          <IconContainer icon={<TbPhoto size={32} />} tooltip="Background" />
+        </DialogTrigger>
+        <DialogContent className="bg-gray-800 text-white border-none ">
+          <DialogHeader>
+            <DialogTitle className="text-center ">
+              Escolha a imagem de fundo
+            </DialogTitle>
+            <DialogDescription className="text-white text-center"></DialogDescription>
+          </DialogHeader>
+          <BackgroundGrid />
+        </DialogContent>
+      </Dialog>
+    </>
+  );
+}
+
+function BackgroundGrid() {
+  return (
+    <>
+      <div className="grid grid-cols-3 gap-2 ">
+        <img
+          src={aurora}
+          alt="aurora boreal background image"
+          className="grid-img"
+        />
+        <img
+          src={forest}
+          alt="aurora boreal background image"
+          className="grid-img"
+        />
+        <video muted src={lofi} className="grid-img" />
+      </div>
     </>
   );
 }
