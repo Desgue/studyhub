@@ -20,7 +20,6 @@ import {
   useYoutubeVisibility,
 } from "@/Store/visibilityStore";
 import { useBackgroundImage } from "@/Store/backgroundStore";
-import { backgrounds } from "@/Store/backgroundStore";
 import sunset from "@/assets/background/mountain-sunset.jpg";
 import cozyShop from "@/assets/background/lofi-rainy-cozy-shop.mp4";
 import mountain from "@/assets/background/mountain-night-stars.jpg";
