@@ -19,9 +19,11 @@ import {
   useSpotifyVisibility,
   useYoutubeVisibility,
 } from "@/Store/visibilityStore";
-import aurora from "../../assets/background/aurora-boreal.jpg";
-import lofi from "../../assets/background/lofi-rainy-cozy-shop.mp4";
-import forest from "../../assets/background/forestBG.jpg";
+import { useBackgroundImage } from "@/Store/backgroundStore";
+import { backgrounds } from "@/Store/backgroundStore";
+import sunset from "@/assets/background/mountain-sunset.jpg";
+import cozyShop from "@/assets/background/lofi-rainy-cozy-shop.mp4";
+import mountain from "@/assets/background/mountain-night-stars.jpg";
 
 export default function SideNav() {
   let isDesktop = useMediaQuery("(min-width: 768px)");
@@ -170,21 +172,51 @@ function BackgroundDialog({ isOpen }: { isOpen?: boolean }) {
 }
 
 function BackgroundGrid() {
+  const { setBackgroundImg } = useBackgroundImage();
   return (
     <>
       <div className="grid grid-cols-3 gap-2 ">
-        <img
-          src={aurora}
-          alt="aurora boreal background image"
-          className="grid-img"
+        <BackgroundGridItem
+          src={sunset}
+          onClick={() => setBackgroundImg(sunset)}
+          type="image"
         />
-        <img
-          src={forest}
-          alt="aurora boreal background image"
-          className="grid-img"
+        <BackgroundGridItem
+          src={mountain}
+          onClick={() => setBackgroundImg(mountain)}
+          type="image"
         />
-        <video muted src={lofi} className="grid-img" />
+        <BackgroundGridItem
+          src={cozyShop}
+          onClick={() => setBackgroundImg(cozyShop)}
+          type="video"
+        />
       </div>
     </>
+  );
+}
+
+function BackgroundGridItem({
+  src,
+  onClick,
+  type,
+}: {
+  src: string;
+  onClick: MouseEventHandler<HTMLImageElement>;
+  type: "image" | "video";
+}) {
+  if (type === "image")
+    return (
+      <img
+        src={src}
+        alt="aurora boreal background image"
+        className="grid-img"
+        onClick={onClick}
+      />
+    );
+  return (
+    <div onClick={onClick}>
+      <video muted src={src} className="grid-img" />
+    </div>
   );
 }

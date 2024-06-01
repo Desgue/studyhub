@@ -14,7 +14,7 @@ import {
   useSpotifyVisibility,
   useYoutubeVisibility,
 } from "./Store/visibilityStore";
-import CozyShop from "./components/backgrounds/CozyShop/CozyShop";
+import { useBackgroundImage } from "./Store/backgroundStore";
 
 function App() {
   const { pomodoroPos, setPomodoroPos } = usePomodoroPos();
@@ -23,12 +23,12 @@ function App() {
   const { isYoutubeVisible } = useYoutubeVisibility();
   const { spotifyPos, setSpotifyPos } = useSpotifyPos();
   const { youtubePos, setYoutubePos } = useYoutubePos();
+  const { bgImg } = useBackgroundImage();
   const isDesktop = useMediaQuery("(min-width: 768px)");
+
   return (
     <>
-      <div className="fixed inset-0">
-        <CozyShop />
-      </div>
+      <div className="fixed inset-0">{bgImg}</div>
       <div className="overflow-auto md:overflow-hidden  fixed inset-0 h-screen">
         <SideNav />
         <div className="md:h-screen py-4 flex md:p-0">
