@@ -15,6 +15,6 @@
       @apply  md:min-w-72 w-72 md:w-96 ml-8 md:ml-0  shadow-md rounded-md bg-[#121212] text-[#FFFFFF] bg-opacity-95    ;
     }
     .grid-img{
-    @apply object-cover object-center w-full h-40 max-w-full rounded-lg hover:cursor-pointer hover:scale-105
+    @apply object-cover object-center w-full h-40 max-w-full rounded-lg hover:cursor-pointer hover:scale-105 hover:animate-in   
   }
   }
