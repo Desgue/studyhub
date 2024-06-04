@@ -38,8 +38,7 @@ function Pomodoro() {
   const [breakTime, setBreakTime] = React.useState(shortBreak); // break time state
   const [sessionType, setSessionType] = React.useState("Study") as Session;
   // @ts-ignore
-  const { sound, volume } = useAudioStore();
-  const [audio, setAudio] = React.useState(new Audio(sound));
+  const { sound, volume, audio } = useAudioStore();
 
   React.useEffect(() => {
     setTimer(pomodoroVal * 60);
@@ -63,20 +62,17 @@ function Pomodoro() {
         // If clock run down at a study session, then start the break session
         setSessionType("Break");
         setTimer(breakTime);
+        audio.volume = volume;
         audio.play();
       } else {
         // If clock run down at break session, then start the study session
         setSessionType("Study");
         setTimer(pomodoroVal);
+        audio.volume = volume;
         audio.play();
       }
     }
   }, [timer]);
-
-  React.useEffect(() => {
-    setAudio(new Audio(sound));
-    audio.volume = volume;
-  }, [sound, volume]);
 
   const handleCountdownStart = () => {
     // Click on button when timer is running should pause it

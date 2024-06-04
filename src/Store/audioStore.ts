@@ -4,7 +4,9 @@ type AudioStore = {
     volume: number
     setVolume: (newVol: number) => void
     sound: string,
-    setSound: (newSound: string) => void
+    setSound: (newSound: string) => void,
+    audio: HTMLAudioElement
+    setAudio: (sound: string) => void
 }
 
 export const useAudioStore = create<AudioStore>((set)=> {
@@ -17,5 +19,10 @@ export const useAudioStore = create<AudioStore>((set)=> {
         setSound: (newSound) => set(()=>({
             sound: newSound
         })),
+        audio: new Audio(defaultSound),
+        setAudio: (newSound: string) => set(()=> ({
+            audio: new Audio(newSound)
+        }))
+
     };
 });

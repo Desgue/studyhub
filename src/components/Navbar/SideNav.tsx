@@ -1,3 +1,4 @@
+import { Slider } from "@/components/ui/slider";
 import { FaSpotify } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
 import { MdOutlineTimer } from "react-icons/md";
@@ -31,6 +32,7 @@ import sunset from "@/assets/background/mountain-sunset.jpg";
 import cozyShop from "@/assets/background/lofi-rainy-cozy-shop.mp4";
 import mountain from "@/assets/background/mountain-night-stars.jpg";
 import { Button } from "../ui/button";
+import { useAudioStore } from "@/Store/audioStore";
 
 export default function SideNav() {
   let isDesktop = useMediaQuery("(min-width: 768px)");
@@ -138,18 +140,21 @@ function SettingsDialog({ isOpen }: { isOpen?: boolean }) {
   const { pomodoroVal, setPomodoroVal } = usePomodoroValue();
   const { shortBreakVal, setShortBreakVal } = useShortBreakValue();
   const { longBreakVal, setLongBreakVal } = useLongBreakValue();
+  const { volume, setVolume } = useAudioStore();
 
   // Local States
   const [open, setOpen] = useState(false);
   const [pomodoroLocal, setPomodoroLocal] = useState(pomodoroVal);
   const [shortBreakLocal, setShortBreakLocal] = useState(shortBreakVal);
   const [longBreakLocal, setLongBreakLocal] = useState(longBreakVal);
+  const [sliderVal, setSliderVal] = useState([volume]);
 
   const handleSaveSettings = () => {
     window.confirm("Tem certeza que quer salvar as mudanças?");
     setPomodoroVal(pomodoroLocal);
     setShortBreakVal(shortBreakLocal);
     setLongBreakVal(longBreakLocal);
+    setVolume(sliderVal[0]);
     setOpen(false);
   };
   return (
@@ -190,6 +195,9 @@ function SettingsDialog({ isOpen }: { isOpen?: boolean }) {
                           min={0}
                           autoFocus={false}
                           value={pomodoroLocal}
+                          onChange={(e) =>
+                            setPomodoroLocal(parseInt(e.target.value))
+                          }
                         />
                         <button>
                           <IoMdArrowDropright
@@ -217,6 +225,9 @@ function SettingsDialog({ isOpen }: { isOpen?: boolean }) {
                           min={0}
                           autoFocus={false}
                           value={shortBreakLocal}
+                          onChange={(e) =>
+                            setShortBreakLocal(parseInt(e.target.value))
+                          }
                         />
                         <button>
                           <IoMdArrowDropright
@@ -244,6 +255,9 @@ function SettingsDialog({ isOpen }: { isOpen?: boolean }) {
                           min={0}
                           autoFocus={false}
                           value={longBreakLocal}
+                          onChange={(e) =>
+                            setLongBreakLocal(parseInt(e.target.value))
+                          }
                         />
                         <button>
                           <IoMdArrowDropright
@@ -256,7 +270,16 @@ function SettingsDialog({ isOpen }: { isOpen?: boolean }) {
                     </div>
                   </div>
                 </div>
-                <div className="flex gap-1 border-t-2"></div>
+                <div className="flex flex-col gap-1 border-t-2 text-center mt-4">
+                  <p className="text-lg pt-4">Volume do Áudio</p>
+                  <Slider
+                    value={sliderVal}
+                    onValueChange={(v) => setSliderVal(v)}
+                    min={0}
+                    max={1}
+                    step={0.01}
+                  />
+                </div>
               </div>
             </DialogDescription>
           </DialogHeader>
