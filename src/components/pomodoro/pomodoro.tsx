@@ -97,7 +97,7 @@ function Pomodoro() {
   };
   const handleCountdownReset = () => {
     if (intervalId) clearInterval(intervalId);
-    setTimer(pomodoroVal);
+    setTimer(pomodoroVal * 60);
     setIntervalId(null);
     setBreakTime(shortBreak);
   };

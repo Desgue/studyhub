@@ -40,7 +40,7 @@ export const useShortBreakValue = create<ShortBreakValueStore>((set) => {
 
 export const useLongBreakValue = create<LongBreakValueStore>((set) => {
     return {
-        longBreakVal: 5,
+        longBreakVal: 15,
         setLongBreakVal: (newVal) => set(() => ({
             longBreakVal: newVal
         }))
