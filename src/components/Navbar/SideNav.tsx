@@ -15,7 +15,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import useMediaQuery from "@/Hooks/useMediaQuery";
-import { MouseEventHandler, useRef, useState } from "react";
+import { MouseEventHandler, useState } from "react";
 import {
   usePomodoroVisibility,
   useSpotifyVisibility,
