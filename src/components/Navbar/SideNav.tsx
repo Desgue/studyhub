@@ -4,25 +4,33 @@ import { MdOutlineTimer } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { TbPhoto } from "react-icons/tb";
+import { IoMdArrowDropright, IoMdArrowDropleft } from "react-icons/io";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
   DialogHeader,
+  DialogFooter,
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
 import useMediaQuery from "@/Hooks/useMediaQuery";
-import { MouseEventHandler, useState } from "react";
+import { MouseEventHandler, useRef, useState } from "react";
 import {
   usePomodoroVisibility,
   useSpotifyVisibility,
   useYoutubeVisibility,
 } from "@/Store/visibilityStore";
+import {
+  usePomodoroValue,
+  useShortBreakValue,
+  useLongBreakValue,
+} from "@/Store/valuesStore";
 import { useBackgroundImage } from "@/Store/backgroundStore";
 import sunset from "@/assets/background/mountain-sunset.jpg";
 import cozyShop from "@/assets/background/lofi-rainy-cozy-shop.mp4";
 import mountain from "@/assets/background/mountain-night-stars.jpg";
+import { Button } from "../ui/button";
 
 export default function SideNav() {
   let isDesktop = useMediaQuery("(min-width: 768px)");
@@ -127,9 +135,26 @@ function IconContainer({
 }
 
 function SettingsDialog({ isOpen }: { isOpen?: boolean }) {
+  const { pomodoroVal, setPomodoroVal } = usePomodoroValue();
+  const { shortBreakVal, setShortBreakVal } = useShortBreakValue();
+  const { longBreakVal, setLongBreakVal } = useLongBreakValue();
+
+  // Local States
+  const [open, setOpen] = useState(false);
+  const [pomodoroLocal, setPomodoroLocal] = useState(pomodoroVal);
+  const [shortBreakLocal, setShortBreakLocal] = useState(shortBreakVal);
+  const [longBreakLocal, setLongBreakLocal] = useState(longBreakVal);
+
+  const handleSaveSettings = () => {
+    window.confirm("Tem certeza que quer salvar as mudanças?");
+    setPomodoroVal(pomodoroLocal);
+    setShortBreakVal(shortBreakLocal);
+    setLongBreakVal(longBreakLocal);
+    setOpen(false);
+  };
   return (
     <>
-      <Dialog>
+      <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger className={isOpen ? "" : "hidden"}>
           <IconContainer
             icon={<IoSettingsOutline size={30} />}
@@ -138,11 +163,117 @@ function SettingsDialog({ isOpen }: { isOpen?: boolean }) {
         </DialogTrigger>
         <DialogContent className="bg-gray-800 text-white border-none ">
           <DialogHeader>
-            <DialogTitle className="text-center "> Settings </DialogTitle>
+            <DialogTitle className="text-center text-2xl pb-6">
+              Settings
+            </DialogTitle>
             <DialogDescription className="text-white">
-              Settings Page Under Construction
+              <div className="flex flex-col">
+                <div className="flex flex-col gap-1">
+                  <p className="text-center text-lg">
+                    Time(<i>minutes</i>)
+                  </p>
+                  <div className="flex gap-1">
+                    <div className="flex flex-col text-center items-center">
+                      <p>Pomodoro</p>
+                      <div className="flex justify-center">
+                        <button
+                          onClick={() => setPomodoroLocal((prev) => --prev)}
+                        >
+                          <IoMdArrowDropleft
+                            className=" hover:cursor-pointer"
+                            size={24}
+                          />
+                        </button>
+                        <input
+                          className="border-0 outline-0 bg-gray-600 h-8 w-5/12 text-center"
+                          type="number"
+                          min={0}
+                          autoFocus={false}
+                          value={pomodoroLocal}
+                        />
+                        <button>
+                          <IoMdArrowDropright
+                            className="hover:cursor-pointer"
+                            size={22}
+                            onClick={() => setPomodoroLocal((prev) => ++prev)}
+                          />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="flex flex-col text-center items-center">
+                      <p>Short Break</p>
+                      <div className="flex justify-center">
+                        <button
+                          onClick={() => setShortBreakLocal((prev) => --prev)}
+                        >
+                          <IoMdArrowDropleft
+                            className=" hover:cursor-pointer"
+                            size={24}
+                          />
+                        </button>
+                        <input
+                          className="border-0 outline-0 bg-gray-600 h-8 w-5/12 text-center"
+                          type="number"
+                          min={0}
+                          autoFocus={false}
+                          value={shortBreakLocal}
+                        />
+                        <button>
+                          <IoMdArrowDropright
+                            className="hover:cursor-pointer"
+                            size={22}
+                            onClick={() => setShortBreakLocal((prev) => ++prev)}
+                          />
+                        </button>
+                      </div>
+                    </div>
+                    <div className="flex flex-col text-center items-center">
+                      <p>Long Break</p>
+                      <div className="flex justify-center">
+                        <button
+                          onClick={() => setLongBreakLocal((prev) => --prev)}
+                        >
+                          <IoMdArrowDropleft
+                            className=" hover:cursor-pointer"
+                            size={24}
+                          />
+                        </button>
+                        <input
+                          className="border-0 outline-0 bg-gray-600 h-8 w-5/12 text-center"
+                          type="number"
+                          min={0}
+                          autoFocus={false}
+                          value={longBreakLocal}
+                        />
+                        <button>
+                          <IoMdArrowDropright
+                            className="hover:cursor-pointer"
+                            size={22}
+                            onClick={() => setLongBreakLocal((prev) => ++prev)}
+                          />
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex gap-1 border-t-2"></div>
+              </div>
             </DialogDescription>
           </DialogHeader>
+          <DialogFooter>
+            <div className="flex gap-1 justify-center w-full">
+              <Button className="w-full h-12" variant="ghost">
+                Cancelar
+              </Button>
+              <Button
+                className="w-full h-12"
+                variant="ghost"
+                onClick={handleSaveSettings}
+              >
+                Salvar
+              </Button>
+            </div>
+          </DialogFooter>
         </DialogContent>
       </Dialog>
     </>
@@ -161,9 +292,10 @@ function BackgroundDialog({ isOpen }: { isOpen?: boolean }) {
             <DialogTitle className="text-center ">
               Escolha a imagem de fundo
             </DialogTitle>
-            <DialogDescription className="text-white text-center"></DialogDescription>
+            <DialogDescription className="text-white text-center">
+              <BackgroundGrid />
+            </DialogDescription>
           </DialogHeader>
-          <BackgroundGrid />
         </DialogContent>
       </Dialog>
     </>

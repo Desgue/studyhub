@@ -1,20 +1,32 @@
 @tailwind base;
-  @tailwind components;
-  @tailwind utilities;
-  @layer components {
-    .sidebar-icons{
-      @apply p-2 md:w-24 md:h-24 flex items-center justify-center bg-gray-800  md:hover:bg-gray-700 hover:cursor-pointer;  
-    }
+@tailwind components;
+@tailwind utilities;
+@layer components {
+  .sidebar-icons {
+    @apply p-2 md:w-24 md:h-24 flex items-center justify-center bg-gray-800  md:hover:bg-gray-700 hover:cursor-pointer;
+  }
 
-    .sidebar-tooltips{
-      @apply absolute min-w-max w-auto left-24 text-xs font-bold bg-gray-900 shadow-md rounded-md p-2 m-2 scale-0 
+  .sidebar-tooltips {
+    @apply absolute min-w-max w-auto left-24 text-xs font-bold bg-gray-900 shadow-md rounded-md p-2 m-2 scale-0 
       transition duration-100 z-[999];
-    }
+  }
 
-    .widget-container {
-      @apply  md:min-w-72 w-72 md:w-96 ml-8 md:ml-0  shadow-md rounded-md bg-[#121212] text-[#FFFFFF] bg-opacity-95    ;
-    }
-    .grid-img{
-    @apply object-cover object-center w-full h-40 max-w-full rounded-lg hover:cursor-pointer hover:scale-105 hover:animate-in   
+  .widget-container {
+    @apply md:min-w-72 w-72 md:w-96 ml-8 md:ml-0  shadow-md rounded-md bg-[#121212] text-[#FFFFFF] bg-opacity-95;
   }
+  .grid-img {
+    @apply object-cover object-center w-full h-40 max-w-full rounded-lg hover:cursor-pointer hover:scale-105 hover:animate-in;
   }
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}

@@ -1,6 +1,11 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { Button } from "../ui/button";
 import alarm from "../../assets/alarm.wav";
+import {
+  useLongBreakValue,
+  usePomodoroValue,
+  useShortBreakValue,
+} from "@/Store/valuesStore";
 
 function formatDisplayTime(time: number) {
   if (time < 10) {
@@ -12,28 +17,35 @@ function formatDisplayTime(time: number) {
 function secondsToTime(seconds: number) {
   return [Math.floor(seconds / 60), seconds % 60];
 }
-const DEFAULT_POMODORO = 1500;
-const DEFAULT_SHORT_BREAK = 300;
-const DEFAULT_LONG_BREAK = 900;
 type Session = ["Study" | "Break", Dispatch<SetStateAction<String>>];
 
 function Pomodoro() {
+  //Global States
+  const { pomodoroVal } = usePomodoroValue();
+  const { shortBreakVal } = useShortBreakValue();
+  const { longBreakVal } = useLongBreakValue();
+  // Local States
   // @ts-ignore
-  const [pomodoroTimer, setPomodoroTimer] = React.useState(DEFAULT_POMODORO); // Pomodoro countdown timer in seconds
-  const [timer, setTimer] = React.useState(pomodoroTimer); // Timer state in seconds that will be manipulated
+  const [timer, setTimer] = React.useState(pomodoroVal * 60); // Timer state in seconds that will be manipulated
   const [minutes, setMinutes] = React.useState(0); // Minutes value formated for diplay in the ui
   const [seconds, setSeconds] = React.useState(0); // Seconds value formated for diplay in the ui
   const [hasStarted, setHasStarted] = React.useState(false); // State responsible for indicating if clock is running or paused
   const [intervalId, setIntervalId] = React.useState(null) as any; // Id of the interval object used for clearing it when clock is paused
   // @ts-ignore
-  const [shortBreak, setShortBreak] = React.useState(DEFAULT_SHORT_BREAK); // short break interval time configurable through settings
+  const [shortBreak, setShortBreak] = React.useState(shortBreakVal * 60); // short break interval time configurable through settings
   // @ts-ignore
-  const [longBreak, setLongBreak] = React.useState(DEFAULT_LONG_BREAK); // long break interval time configurable through settings
+  const [longBreak, setLongBreak] = React.useState(longBreakVal * 60); // long break interval time configurable through settings
   const [breakTime, setBreakTime] = React.useState(shortBreak); // break time state
   const [sessionType, setSessionType] = React.useState("Study") as Session;
   // @ts-ignore
   const [alarmSound, setAlarmSound] = React.useState(alarm);
   const [audio, setAudio] = React.useState(new Audio(alarmSound));
+
+  React.useEffect(() => {
+    setTimer(pomodoroVal * 60);
+    setShortBreak(shortBreakVal * 60);
+    setLongBreak(longBreakVal * 60);
+  }, [pomodoroVal, shortBreakVal, longBreakVal]);
 
   React.useEffect(() => {
     let time = secondsToTime(timer);
@@ -55,7 +67,7 @@ function Pomodoro() {
       } else {
         // If clock run down at break session, then start the study session
         setSessionType("Study");
-        setTimer(pomodoroTimer);
+        setTimer(pomodoroVal);
         audio.play();
       }
     }
@@ -88,7 +100,7 @@ function Pomodoro() {
   };
   const handleCountdownReset = () => {
     if (intervalId) clearInterval(intervalId);
-    setTimer(pomodoroTimer);
+    setTimer(pomodoroVal);
     setIntervalId(null);
     setBreakTime(shortBreak);
   };
