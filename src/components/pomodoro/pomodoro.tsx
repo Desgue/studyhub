@@ -1,11 +1,11 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { Button } from "../ui/button";
-import alarm from "../../assets/alarm.wav";
 import {
   useLongBreakValue,
   usePomodoroValue,
   useShortBreakValue,
 } from "@/Store/valuesStore";
+import { useAudioStore } from "@/Store/audioStore";
 
 function formatDisplayTime(time: number) {
   if (time < 10) {
@@ -38,8 +38,8 @@ function Pomodoro() {
   const [breakTime, setBreakTime] = React.useState(shortBreak); // break time state
   const [sessionType, setSessionType] = React.useState("Study") as Session;
   // @ts-ignore
-  const [alarmSound, setAlarmSound] = React.useState(alarm);
-  const [audio, setAudio] = React.useState(new Audio(alarmSound));
+  const { sound, volume } = useAudioStore();
+  const [audio, setAudio] = React.useState(new Audio(sound));
 
   React.useEffect(() => {
     setTimer(pomodoroVal * 60);
@@ -74,8 +74,9 @@ function Pomodoro() {
   }, [timer]);
 
   React.useEffect(() => {
-    setAudio(new Audio(alarmSound));
-  }, [alarmSound]);
+    setAudio(new Audio(sound));
+    audio.volume = volume;
+  }, [sound, volume]);
 
   const handleCountdownStart = () => {
     // Click on button when timer is running should pause it
