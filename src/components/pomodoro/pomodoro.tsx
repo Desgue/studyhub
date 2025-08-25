@@ -6,17 +6,7 @@ import {
   useShortBreakValue,
 } from "@/Store/valuesStore";
 import { useAudioStore } from "@/Store/audioStore";
-
-function formatDisplayTime(time: number) {
-  if (time < 10) {
-    return `0${time}`;
-  }
-  return time;
-}
-
-function secondsToTime(seconds: number) {
-  return [Math.floor(seconds / 60), seconds % 60];
-}
+import { formatDisplayTime, secondsToTime } from "@/lib/timeUtils";
 type Session = ["Study" | "Break", Dispatch<SetStateAction<String>>];
 
 function Pomodoro() {
