@@ -1,73 +1,35 @@
 import React from "react";
 import { Button } from "../ui/button";
-import {
-  useLongBreakValue,
-  usePomodoroValue,
-  useShortBreakValue,
-} from "@/Store/valuesStore";
-import { useAudioStore } from "@/Store/audioStore";
 import { formatDisplayTime, secondsToTime } from "@/lib/timeUtils";
 import { useTimer } from "@/Hooks/useTimer";
-
-type SessionType = "Study" | "Break";
+import { useSessionManager } from "@/Hooks/useSessionManager";
 
 function Pomodoro() {
-  //Global States
-  const { pomodoroVal } = usePomodoroValue();
-  const { shortBreakVal } = useShortBreakValue();
-  const { longBreakVal } = useLongBreakValue();
-  const { volume, audio } = useAudioStore();
+  // Session management hook
+  const sessionManager = useSessionManager();
   
-  // Local States
-  const [breakTime, setBreakTime] = React.useState(shortBreakVal * 60);
-  const [sessionType, setSessionType] = React.useState<SessionType>("Study");
-  
-  // Timer completion handler with session switching
-  const handleTimerComplete = React.useCallback(() => {
-    // Play audio notification
-    audio.volume = volume;
-    audio.play();
-    
-    // Handle session switching
-    setSessionType(prev => prev === "Study" ? "Break" : "Study");
-  }, [audio, volume]);
-  
-  // Timer hook
+  // Timer hook with session completion callback
   const timer = useTimer({
-    initialTime: pomodoroVal * 60,
-    onComplete: handleTimerComplete
+    initialTime: sessionManager.getCurrentSessionTime(),
+    onComplete: sessionManager.handleSessionComplete
   });
   
   // Update timer when session type changes (only after completion)
   React.useEffect(() => {
     if (timer.currentTime === 0) {
-      if (sessionType === "Study") {
-        timer.setTime(pomodoroVal * 60);
-      } else {
-        timer.setTime(breakTime);
-      }
+      timer.setTime(sessionManager.getCurrentSessionTime());
     }
-  }, [sessionType, pomodoroVal, breakTime, timer]);
+  }, [sessionManager.sessionType, sessionManager.breakTime, timer, sessionManager]);
   
   // Derived state for display
   const [minutes, seconds] = secondsToTime(timer.currentTime);
 
-  // Update break time when global values change
+  // Update timer when global values change (only if not running)
   React.useEffect(() => {
-    const newBreakTime = shortBreakVal * 60;
-    setBreakTime(newBreakTime);
-    // Update timer if currently in break session and not running
-    if (sessionType === "Break" && !timer.isRunning) {
-      timer.setTime(newBreakTime);
+    if (!timer.isRunning) {
+      timer.setTime(sessionManager.getCurrentSessionTime());
     }
-  }, [shortBreakVal, sessionType, timer]);
-  
-  // Update study time when pomodoro value changes (only if not running)
-  React.useEffect(() => {
-    if (!timer.isRunning && sessionType === "Study") {
-      timer.setTime(pomodoroVal * 60);
-    }
-  }, [pomodoroVal, timer, sessionType]);
+  }, [sessionManager.getCurrentSessionTime, timer]);
 
   const handleCountdownStart = () => {
     if (timer.isRunning) {
@@ -78,15 +40,15 @@ function Pomodoro() {
   };
   
   const handleCountdownReset = () => {
-    setSessionType("Study");
-    timer.setTime(pomodoroVal * 60);
+    sessionManager.resetSession();
+    timer.setTime(sessionManager.getCurrentSessionTime());
     timer.pause();
   };
   
   const handleBreakTimeChange = (newBreakTime: number) => {
-    setBreakTime(newBreakTime);
+    sessionManager.setBreakTime(newBreakTime);
     // If currently in break session and timer is not running, update the timer immediately
-    if (sessionType === "Break" && !timer.isRunning) {
+    if (sessionManager.sessionType === "Break" && !timer.isRunning) {
       timer.setTime(newBreakTime);
     }
   };
@@ -98,7 +60,7 @@ function Pomodoro() {
           <Button
             variant="ghost"
             disabled={timer.isRunning}
-            onClick={() => handleBreakTimeChange(shortBreakVal * 60)}
+            onClick={() => handleBreakTimeChange(sessionManager.getShortBreakTime())}
           >
             Pausa Curta
           </Button>
@@ -107,7 +69,7 @@ function Pomodoro() {
           <Button
             variant="ghost"
             disabled={timer.isRunning}
-            onClick={() => handleBreakTimeChange(longBreakVal * 60)}
+            onClick={() => handleBreakTimeChange(sessionManager.getLongBreakTime())}
           >
             Pausa Longa
           </Button>
@@ -115,7 +77,7 @@ function Pomodoro() {
       </div>
       <div className="text-center">
         <div className="text-sm font-medium text-muted-foreground mb-2">
-          {sessionType === "Study" ? "Sessão de Estudo" : "Pausa"}
+          {sessionManager.sessionType === "Study" ? "Sessão de Estudo" : "Pausa"}
         </div>
         <div className="text-7xl md:text-9xl p-4">
           {formatDisplayTime(minutes)}:{formatDisplayTime(seconds)}
